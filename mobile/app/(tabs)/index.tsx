@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     color: '#4285F4',
   },
   googleButtonText: {
-    color: '#333',
+    backgroundColor: '#blue',
     fontSize: 16,
     fontWeight: '500',
   },
