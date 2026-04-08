@@ -1,98 +1,222 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  SafeAreaView,
+} from 'react-native';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+const LoginScreen = () => {
+  const [login, setLogin] = useState('');
+  const [senha, setSenha] = useState('');
 
-export default function HomeScreen() {
+  const handleLogin = () => {
+    // Função de login
+    console.log('Login:', login, 'Senha:', senha);
+  };
+
+  const handleGoogleLogin = () => {
+    // Função de login com Google
+    console.log('Login com Google');
+  };
+
+  const handleForgotPassword = () => {
+    // Função para recuperar senha
+    console.log('Esqueceu a senha');
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.keyboardView}
+      >
+        <ScrollView
+          contentContainerStyle={styles.scrollContainer}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.content}>
+            {/* Título */}
+            <Text style={styles.title}>AGENDAMENTOS</Text>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+            {/* Formulário */}
+            <View style={styles.form}>
+              <Text style={styles.label}>Fazer login</Text>
+
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite seu login"
+                  placeholderTextColor="#999"
+                  value={login}
+                  onChangeText={setLogin}
+                  autoCapitalize="none"
+                />
+              </View>
+
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite sua senha"
+                  placeholderTextColor="#999"
+                  value={senha}
+                  onChangeText={setSenha}
+                  secureTextEntry
+                />
+              </View>
+
+              <TouchableOpacity
+                style={styles.forgotButton}
+                onPress={handleForgotPassword}
+              >
+                <Text style={styles.forgotText}>Esqueceu sua senha?</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+                <Text style={styles.loginButtonText}>Entrar</Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Divisor */}
+            <View style={styles.divider}>
+              <View style={styles.dividerLine} />
+              <Text style={styles.dividerText}>ou</Text>
+              <View style={styles.dividerLine} />
+            </View>
+
+            {/* Botão Google */}
+            <TouchableOpacity style={styles.googleButton} onPress={handleGoogleLogin}>
+              <View style={styles.googleIconContainer}>
+                <Text style={styles.googleIcon}>G</Text>
+              </View>
+              <Text style={styles.googleButtonText}>Fazer login com o google</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  keyboardView: {
+    flex: 1,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  content: {
+    paddingHorizontal: 24,
+    paddingVertical: 40,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 48,
+    color: '#000',
+    letterSpacing: 1,
+  },
+  form: {
+    marginBottom: 24,
+  },
+  label: {
+    fontSize: 24,
+    fontWeight: '500',
+    marginBottom: 32,
+    color: '#000',
+  },
+  inputContainer: {
+    marginBottom: 16,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    fontSize: 16,
+    backgroundColor: '#fff',
+    color: '#000',
+  },
+  forgotButton: {
+    alignSelf: 'flex-end',
+    marginTop: 8,
+    marginBottom: 32,
+  },
+  forgotText: {
+    color: '#666',
+    fontSize: 14,
+    textDecorationLine: 'underline',
+  },
+  loginButton: {
+    backgroundColor: '#000',
+    borderRadius: 8,
+    paddingVertical: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loginButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  divider: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    marginVertical: 32,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#e0e0e0',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  dividerText: {
+    marginHorizontal: 16,
+    color: '#666',
+    fontSize: 14,
+  },
+  googleButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    backgroundColor: '#fff',
+  },
+  googleIconContainer: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  googleIcon: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#4285F4',
+  },
+  googleButtonText: {
+    backgroundColor: '#blue',
+    fontSize: 16,
+    fontWeight: '500',
   },
 });
+
+export default LoginScreen;

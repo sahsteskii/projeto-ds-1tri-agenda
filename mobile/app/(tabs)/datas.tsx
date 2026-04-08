@@ -1,81 +1,134 @@
-import { Platform, StyleSheet } from 'react-native';
+import React from 'react';
+import { 
+  StyleSheet, 
+  Text, 
+  View, 
+  TouchableOpacity, 
+  ScrollView, 
+  SafeAreaView, 
+  Alert 
+} from 'react-native';
 
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+const App = () => {
+  // Criamos as datas de 01 a 30
+  const dias = Array.from({ length: 30 }, (_, i) => {
+    const dia = i + 1;
+    return dia < 10 ? `0${dia}/04` : `${dia}/04`;
+  });
 
-export default function HomeScreen() {
+  const handlePress = (item) => {
+    Alert.alert("Data selecionada", `Você clicou na data: ${item}`);
+  };
+
+  const handleContact = () => {
+    Alert.alert("Contato", "Redirecionando para o atendimento...");
+  };
+
   return (
-      <><ThemedView style={styles.titleContainer}>
-      <ThemedText type="title">Datas disponiveis</ThemedText>
-    </ThemedView><ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView><ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')} />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')} />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.title}>Datas disponíveis</Text>
+        <Text style={styles.subtitle}>janeiro</Text>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView><ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView></>
+        <View style={styles.grid}>
+          {dias.map((data, index) => (
+            <TouchableOpacity 
+              key={index} 
+              style={styles.button}
+              onPress={() => handlePress(data)}
+            >
+              <Text style={styles.buttonText}>{data}</Text>
+            </TouchableOpacity>
+          ))}
+          
+          {/* Botão 31/04 isolado para ficar centralizado embaixo */}
+          <View style={styles.fullWidthRow}>
+            <TouchableOpacity 
+              style={styles.button}
+              onPress={() => handlePress("31/04")}
+            >
+              <Text style={styles.buttonText}>31/04</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
+
+      {/* Footer transformado em botão */}
+      <TouchableOpacity 
+        style={styles.footer} 
+        activeOpacity={0.7}
+        onPress={handleContact}
+      >
+        <Text style={styles.footerText}>Fale conosco</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#d9d9d9',
+  },
+  container: {
     alignItems: 'center',
-    gap: 8,
+    paddingTop: 40,
+    paddingBottom: 120, 
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  title: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: '#1e67b1',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
+  subtitle: {
+    fontSize: 55,
+    fontStyle: 'italic',
+    color: '#2b84f3',
+    marginTop: -10,
+    marginBottom: 20,
+    // Se tiver uma fonte cursiva instalada, use: fontFamily: 'NomeDaFonte'
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    paddingHorizontal: 15,
+  },
+  button: {
+    backgroundColor: '#1e67b1',
+    width: '30%', 
+    margin: 5,
+    paddingVertical: 12,
+    borderRadius: 25,
+    alignItems: 'center',
+    // Sombra
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+  },
+  fullWidthRow: {
+    width: '100%',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  footer: {
     position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    backgroundColor: '#1e67b1',
+    padding: 25,
+    alignItems: 'center',
   },
-  
+  footerText: {
+    color: '#adb5bd',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textTransform: 'none',
+  },
 });
