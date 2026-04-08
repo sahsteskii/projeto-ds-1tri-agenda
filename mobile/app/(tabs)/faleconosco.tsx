@@ -2,221 +2,225 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  TextInput,
-  TouchableOpacity,
   StyleSheet,
-  Image,
-  KeyboardAvoidingView,
-  Platform,
+  TouchableOpacity,
+  TextInput,
   ScrollView,
   SafeAreaView,
+  StatusBar,
+  Linking,
+  Alert,
 } from 'react-native';
 
-const LoginScreen = () => {
-  const [login, setLogin] = useState('');
-  const [senha, setSenha] = useState('');
+export default function FaleConosco() {
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [mensagem, setMensagem] = useState('');
 
-  const handleLogin = () => {
-    // Função de login
-    console.log('Login:', login, 'Senha:', senha);
+  const handleEnviar = () => {
+    if (!nome || !email || !mensagem) {
+      Alert.alert('Atenção', 'Por favor, preencha todos os campos.');
+      return;
+    }
+    Alert.alert('Sucesso', 'Mensagem enviada com sucesso!');
+    setNome('');
+    setEmail('');
+    setMensagem('');
   };
 
-  const handleGoogleLogin = () => {
-    // Função de login com Google
-    console.log('Login com Google');
+  const handlePhonePress = () => {
+    Linking.openURL('tel:+5541984584105');
   };
 
-  const handleForgotPassword = () => {
-    // Função para recuperar senha
-    console.log('Esqueceu a senha');
+  const handleEmailPress = () => {
+    Linking.openURL('mailto:calendariopr@gmail.com');
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardView}
-      >
-        <ScrollView
-          contentContainerStyle={styles.scrollContainer}
-          showsVerticalScrollIndicator={false}
-        >
-          <View style={styles.content}>
-            {/* Título */}
-            <Text style={styles.title}>AGENDAMENTOS</Text>
+      <StatusBar barStyle="light-content" backgroundColor="#000" />
+      
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        {/* Título */}
+        <Text style={styles.title}>Fale conosco</Text>
 
-            {/* Formulário */}
-            <View style={styles.form}>
-              <Text style={styles.label}>Fazer login</Text>
+        {/* Informações de Contato */}
+        <TouchableOpacity style={styles.contactCard} onPress={handlePhonePress}>
+          <Text style={styles.contactIcon}>📞</Text>
+          <Text style={styles.contactText}>+55 (41) 98458-4105</Text>
+        </TouchableOpacity>
 
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Digite seu login"
-                  placeholderTextColor="#999"
-                  value={login}
-                  onChangeText={setLogin}
-                  autoCapitalize="none"
-                />
-              </View>
+        <TouchableOpacity style={styles.contactCard} onPress={handleEmailPress}>
+          <Text style={styles.contactIcon}>✉️</Text>
+          <Text style={styles.contactText}>calendariopr@gmail.com</Text>
+        </TouchableOpacity>
 
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Digite sua senha"
-                  placeholderTextColor="#999"
-                  value={senha}
-                  onChangeText={setSenha}
-                  secureTextEntry
-                />
-              </View>
+        {/* Formulário */}
+        <View style={styles.form}>
+          <Text style={styles.formTitle}>Envie uma mensagem</Text>
+          
+          <Text style={styles.label}>Seu nome</Text>
+          <TextInput
+            style={styles.input}
+            placeholderTextColor="#999"
+            value={nome}
+            onChangeText={setNome}
+          />
+          
+          <Text style={styles.label}>Seu e-mail</Text>
+          <TextInput
+            style={styles.input}
+            placeholderTextColor="#999"
+            keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
+          />
+          
+          <Text style={styles.label}>Sua mensagem</Text>
+          <TextInput
+            style={[styles.input, styles.textArea]}
+            placeholderTextColor="#999"
+            multiline
+            numberOfLines={4}
+            value={mensagem}
+            onChangeText={setMensagem}
+          />
+          
+          <TouchableOpacity style={styles.button} onPress={handleEnviar}>
+            <Text style={styles.buttonText}>Enviar</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
 
-              <TouchableOpacity
-                style={styles.forgotButton}
-                onPress={handleForgotPassword}
-              >
-                <Text style={styles.forgotText}>Esqueceu sua senha?</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-                <Text style={styles.loginButtonText}>Entrar</Text>
-              </TouchableOpacity>
-            </View>
-
-            {/* Divisor */}
-            <View style={styles.divider}>
-              <View style={styles.dividerLine} />
-              <Text style={styles.dividerText}>ou</Text>
-              <View style={styles.dividerLine} />
-            </View>
-
-            {/* Botão Google */}
-            <TouchableOpacity style={styles.googleButton} onPress={handleGoogleLogin}>
-              <View style={styles.googleIconContainer}>
-                <Text style={styles.googleIcon}>G</Text>
-              </View>
-              <Text style={styles.googleButtonText}>Fazer login com o google</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+      {/* Bottom Navigation AZUL */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity style={styles.navItem}>
+          <Text style={styles.navText}>Home</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity style={styles.navItem}>
+          <Text style={styles.navText}>Explore</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity style={[styles.navItem, styles.activeNavItem]}>
+          <Text style={[styles.navText, styles.activeNavText]}>aiuda</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity style={styles.navItem}>
+          <Text style={styles.navText}>datas</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#121212',
   },
-  keyboardView: {
-    flex: 1,
-  },
-  scrollContainer: {
+  scrollContent: {
     flexGrow: 1,
-    justifyContent: 'center',
-  },
-  content: {
-    paddingHorizontal: 24,
-    paddingVertical: 40,
+    paddingBottom: 100,
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 48,
-    color: '#000',
-    letterSpacing: 1,
-  },
-  form: {
-    marginBottom: 24,
-  },
-  label: {
     fontSize: 24,
-    fontWeight: '500',
-    marginBottom: 32,
-    color: '#000',
+    fontWeight: 'bold',
+    color: 'white',
+    marginTop: 20,
+    marginBottom: 24,
+    paddingHorizontal: 20,
   },
-  inputContainer: {
-    marginBottom: 16,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    fontSize: 16,
-    backgroundColor: '#fff',
-    color: '#000',
-  },
-  forgotButton: {
-    alignSelf: 'flex-end',
-    marginTop: 8,
-    marginBottom: 32,
-  },
-  forgotText: {
-    color: '#666',
-    fontSize: 14,
-    textDecorationLine: 'underline',
-  },
-  loginButton: {
-    backgroundColor: '#000',
-    borderRadius: 8,
-    paddingVertical: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  loginButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  divider: {
+  contactCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 32,
-  },
-  dividerLine: {
-    flex: 1,
-    height: 1,
-    backgroundColor: '#e0e0e0',
-  },
-  dividerText: {
-    marginHorizontal: 16,
-    color: '#666',
-    fontSize: 14,
-  },
-  googleButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
+    backgroundColor: '#1e1e1e',
+    marginHorizontal: 20,
+    marginVertical: 8,
+    padding: 14,
     borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    backgroundColor: '#fff',
   },
-  googleIconContainer: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  contactIcon: {
+    fontSize: 20,
     marginRight: 12,
   },
-  googleIcon: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#4285F4',
-  },
-  googleButtonText: {
-    color: '#333',
+  contactText: {
     fontSize: 16,
+    color: 'white',
+    flex: 1,
+  },
+  form: {
+    marginHorizontal: 20,
+    marginTop: 24,
+    backgroundColor: '#1e1e1e',
+    borderRadius: 8,
+    padding: 16,
+  },
+  formTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: 'white',
+    marginBottom: 16,
+  },
+  label: {
+    fontSize: 14,
+    color: '#aaa',
+    marginBottom: 6,
+    marginTop: 8,
+  },
+  input: {
+    backgroundColor: '#2a2a2a',
+    borderRadius: 6,
+    padding: 12,
+    color: 'white',
+    fontSize: 16,
+    borderWidth: 1,
+    borderColor: '#333',
+  },
+  textArea: {
+    height: 100,
+    textAlignVertical: 'top',
+  },
+  button: {
+    backgroundColor: '#007AFF',
+    borderRadius: 6,
+    padding: 14,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  
+  // Rodapé AZUL
+  bottomNav: {
+    flexDirection: 'row',
+    backgroundColor: '#0066CC', // Azul principal
+    width: '100%',
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 0,
+  },
+  navItem: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  activeNavItem: {
+    // Item ativo pode ter estilo adicional se quiser
+  },
+  navText: {
+    color: 'rgba(255,255,255,0.7)',
+    fontSize: 14,
     fontWeight: '500',
   },
+  activeNavText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 15,
+  },
 });
-
-export default LoginScreen;
