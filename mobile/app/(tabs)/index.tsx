@@ -1,222 +1,168 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  SafeAreaView,
+import React from 'react';
+import { 
+  StyleSheet, 
+  View, 
+  Text, 
+  TextInput, 
+  TouchableOpacity, 
+  SafeAreaView, 
+  Linking,
+  StatusBar
 } from 'react-native';
+// Mudamos para @expo/vector-icons que já vem no Expo por padrão
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
-const LoginScreen = () => {
-  const [login, setLogin] = useState('');
-  const [senha, setSenha] = useState('');
-
-  const handleLogin = () => {
-    // Função de login
-    console.log('Login:', login, 'Senha:', senha);
-  };
-
+export default function HomeScreen() {
+  
   const handleGoogleLogin = () => {
-    // Função de login com Google
-    console.log('Login com Google');
-  };
-
-  const handleForgotPassword = () => {
-    // Função para recuperar senha
-    console.log('Esqueceu a senha');
+    Linking.openURL('https://accounts.google.com/signin');
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardView}
-      >
-        <ScrollView
-          contentContainerStyle={styles.scrollContainer}
-          showsVerticalScrollIndicator={false}
-        >
-          <View style={styles.content}>
-            {/* Título */}
-            <Text style={styles.title}>AGENDAMENTOS</Text>
+      <StatusBar backgroundColor="#1E67B5" barStyle="light-content" />
+      
+      {/* Header */}
+      <View style={styles.header}>
+        <MaterialCommunityIcons name="account" size={50} color="#FFF" />
+        <Text style={styles.headerTitle}>AGENDAMENTOS</Text>
+      </View>
 
-            {/* Formulário */}
-            <View style={styles.form}>
-              <Text style={styles.label}>Fazer login</Text>
+      {/* Formulário */}
+      <View style={styles.content}>
+        <Text style={styles.label}>Fazer login</Text>
+        <TextInput 
+          style={[styles.input, styles.inputBlue]} 
+          placeholder="Digite seu login"
+          placeholderTextColor="#DDD"
+        />
 
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Digite seu login"
-                  placeholderTextColor="#999"
-                  value={login}
-                  onChangeText={setLogin}
-                  autoCapitalize="none"
-                />
-              </View>
+        <Text style={styles.label}>Senha</Text>
+        <TextInput 
+          style={[styles.input, styles.inputGrey]} 
+          placeholder="Digite sua senha"
+          placeholderTextColor="#666"
+          secureTextEntry
+        />
 
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Digite sua senha"
-                  placeholderTextColor="#999"
-                  value={senha}
-                  onChangeText={setSenha}
-                  secureTextEntry
-                />
-              </View>
+        <TouchableOpacity>
+          <Text style={styles.forgotPassword}>Esqueceu sua senha?</Text>
+        </TouchableOpacity>
 
-              <TouchableOpacity
-                style={styles.forgotButton}
-                onPress={handleForgotPassword}
-              >
-                <Text style={styles.forgotText}>Esqueceu sua senha?</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-                <Text style={styles.loginButtonText}>Entrar</Text>
-              </TouchableOpacity>
-            </View>
-
-            {/* Divisor */}
-            <View style={styles.divider}>
-              <View style={styles.dividerLine} />
-              <Text style={styles.dividerText}>ou</Text>
-              <View style={styles.dividerLine} />
-            </View>
-
-            {/* Botão Google */}
-            <TouchableOpacity style={styles.googleButton} onPress={handleGoogleLogin}>
-              <View style={styles.googleIconContainer}>
-                <Text style={styles.googleIcon}>G</Text>
-              </View>
-              <Text style={styles.googleButtonText}>Fazer login com o google</Text>
-            </TouchableOpacity>
+        {/* Botão Google */}
+        <TouchableOpacity style={styles.googleButton} onPress={handleGoogleLogin}>
+          <View style={styles.googleIconCircle}>
+            <MaterialCommunityIcons name="google" size={24} color="#000" />
           </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+          <Text style={styles.googleButtonText}>Fazer login com o google</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Bottom Navigation (Simulada conforme a imagem) */}
+      <View style={styles.bottomNav}>
+        <View style={styles.navItem}>
+          <MaterialCommunityIcons name="account-circle-outline" size={35} color="#FFF" />
+          <Text style={styles.navText}>Pe...</Text>
+        </View>
+        <View style={styles.navItem}>
+          <MaterialCommunityIcons name="calendar-check" size={35} color="#FFF" />
+          <Text style={styles.navText}>C...</Text>
+        </View>
+        <View style={styles.navItem}>
+          <MaterialCommunityIcons name="alarm" size={35} color="#FFF" />
+          <Text style={styles.navText}>Alarm</Text>
+        </View>
+        <View style={styles.navItem}>
+          <MaterialCommunityIcons name="whatsapp" size={35} color="#FFF" />
+        </View>
+      </View>
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#D3D3D3', 
   },
-  keyboardView: {
-    flex: 1,
+  header: {
+    backgroundColor: '#1E67B5', 
+    height: 120,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 20,
   },
-  scrollContainer: {
-    flexGrow: 1,
-    justifyContent: 'center',
+  headerTitle: {
+    color: '#FFF',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginLeft: 20,
   },
   content: {
-    paddingHorizontal: 24,
-    paddingVertical: 40,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 48,
-    color: '#000',
-    letterSpacing: 1,
-  },
-  form: {
-    marginBottom: 24,
+    flex: 1,
+    paddingHorizontal: 30,
+    paddingTop: 40,
   },
   label: {
-    fontSize: 24,
-    fontWeight: '500',
-    marginBottom: 32,
+    fontSize: 18,
     color: '#000',
-  },
-  inputContainer: {
-    marginBottom: 16,
+    marginBottom: 8,
+    fontWeight: '500',
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    height: 55,
+    borderRadius: 30,
+    paddingHorizontal: 20,
     fontSize: 16,
-    backgroundColor: '#fff',
-    color: '#000',
+    marginBottom: 20,
   },
-  forgotButton: {
-    alignSelf: 'flex-end',
-    marginTop: 8,
-    marginBottom: 32,
+  inputBlue: {
+    backgroundColor: '#1E67B5',
+    color: '#FFF',
   },
-  forgotText: {
-    color: '#666',
+  inputGrey: {
+    backgroundColor: '#A9A9A9',
+    color: '#FFF',
+  },
+  forgotPassword: {
+    color: '#1E67B5',
     fontSize: 14,
-    textDecorationLine: 'underline',
-  },
-  loginButton: {
-    backgroundColor: '#000',
-    borderRadius: 8,
-    paddingVertical: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  loginButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  divider: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 32,
-  },
-  dividerLine: {
-    flex: 1,
-    height: 1,
-    backgroundColor: '#e0e0e0',
-  },
-  dividerText: {
-    marginHorizontal: 16,
-    color: '#666',
-    fontSize: 14,
+    marginBottom: 30,
   },
   googleButton: {
+    backgroundColor: '#1E67B5',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    backgroundColor: '#fff',
+    height: 55,
+    borderRadius: 30,
+    paddingHorizontal: 10,
   },
-  googleIconContainer: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: '#fff',
+  googleIconCircle: {
+    backgroundColor: '#FFF',
+    width: 35,
+    height: 35,
+    borderRadius: 17.5,
+    justifyContent: 'center',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
-  },
-  googleIcon: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#4285F4',
   },
   googleButtonText: {
-    backgroundColor: '#blue',
+    color: '#FFF',
     fontSize: 16,
-    fontWeight: '500',
+    marginLeft: 15,
   },
+  bottomNav: {
+    backgroundColor: '#1E67B5',
+    height: 80,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  navItem: {
+    alignItems: 'center',
+  },
+  navText: {
+    color: '#FFF',
+    fontSize: 10,
+  }
 });
-
-export default LoginScreen;
