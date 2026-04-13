@@ -72,7 +72,7 @@ export default function CalendarScreen() {
         activeOpacity={0.8}
         onPress={() => router.back()}
       >
-        <Text style={styles.footerText}>Encerrar</Text>
+        <Text style={styles.footerText}>Inicio</Text>
       </TouchableOpacity>
     </View>
   );
@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#1E68AD',
     borderRadius: 50,
+    // Calculo dinâmico para os botões ficarem sempre iguais
     width: (width / 3) - 20, 
     height: 45,
     justifyContent: 'center',
