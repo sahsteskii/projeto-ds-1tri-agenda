@@ -8,23 +8,25 @@ import {
   StatusBar,
   Dimensions
 } from 'react-native';
+import { useRouter } from 'expo-router';
 
 const { width } = Dimensions.get('window');
 
-// Gerando os dados com segurança
-const DATA = Array.from({ length: 31 }, (_, i) => {
+const DATA = Array.from({ length: 30 }, (_, i) => {
   const day = (i + 1).toString().padStart(2, '0');
   return { id: day.toString(), label: `${day}/04` };
 });
 
-// Componente de Botão com verificação de erro no label
-// Se for arquivo .js (JavaScript comum)
+// Componente de Botão atualizado com a navegação
 const DateButton = ({ label = "--/--" }) => { 
+  const router = useRouter(); // Hook para navegação
+
   return (
     <TouchableOpacity 
       style={styles.button} 
       activeOpacity={0.7}
-      onPress={() => console.log("Clicou em:", label)}
+      // Redireciona para a pasta/tela agendamento
+      onPress={() => router.push('/horarios')} 
     >
       <Text style={styles.buttonText}>{label}</Text>
     </TouchableOpacity>
@@ -32,13 +34,27 @@ const DateButton = ({ label = "--/--" }) => {
 };
 
 export default function CalendarScreen() {
+  const router = useRouter();
+
+  const handlePressVoltar = () => {
+    if (router.canGoBack()) {
+      router.replace('/horarios');
+    } else {
+      router.replace('/');
+    }
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#D3D3D3" />
 
       <View style={styles.header}>
+        <TouchableOpacity onPress={handlePressVoltar} style={styles.backBtn}>
+           <Text style={styles.backText}>{"< Voltar"}</Text>
+        </TouchableOpacity>
+        
         <Text style={styles.title}>Datas disponíveis</Text>
-        <Text style={styles.subtitle}>janeiro</Text>
+        <Text style={styles.subtitle}>Abril</Text>
       </View>
 
       <FlatList
@@ -51,8 +67,12 @@ export default function CalendarScreen() {
         showsVerticalScrollIndicator={false}
       />
 
-      <TouchableOpacity style={styles.footer} activeOpacity={0.8}>
-        <Text style={styles.footerText}>Fale conosco</Text>
+      <TouchableOpacity 
+        style={styles.footer} 
+        activeOpacity={0.8}
+        onPress={() => router.back()}
+      >
+        <Text style={styles.footerText}>Encerrar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -62,11 +82,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#D3D3D3',
-    paddingTop: 60, // Espaço para não bater no topo (substituto do SafeAreaView)
+    paddingTop: 60,
   },
   header: {
     alignItems: 'center',
     marginBottom: 30,
+    paddingHorizontal: 20,
+  },
+  backBtn: {
+    alignSelf: 'flex-start',
+    marginBottom: 10,
+  },
+  backText: {
+    color: '#1E68AD',
+    fontWeight: 'bold',
   },
   title: {
     fontSize: 26,
@@ -78,7 +107,6 @@ const styles = StyleSheet.create({
     color: '#3498db',
     fontStyle: 'italic',
     marginTop: -10,
-    // Se não tiver fonte específica instalada, o sistema usa a padrão italic
   },
   grid: {
     paddingHorizontal: 15,
@@ -91,7 +119,6 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#1E68AD',
     borderRadius: 50,
-    // Calculo dinâmico para os botões ficarem sempre iguais
     width: (width / 3) - 20, 
     height: 45,
     justifyContent: 'center',
