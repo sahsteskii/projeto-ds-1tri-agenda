@@ -4,10 +4,12 @@ import { StyleSheet } from 'react-native';
 import React from 'react';
 import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
-
+import { useRouter } from 'expo-router'; 
 const BLUE_COLOR = '#1A62B8'; 
 
 export default function ProfileScreen() {
+  const router = useRouter(); 
+
   return (
     <SafeAreaView style={styles.container}>
       
@@ -38,13 +40,29 @@ export default function ProfileScreen() {
         </View>
       </View>
 
-      
       <View style={styles.content}>
         <View style={styles.grid}>
-          <MenuButton icon={<Icon name="calendar-check" color="#1F68B2" size={40} />} label="meus agendamentos" />
-          <MenuButton icon={<Icon name="calendar" color="#1F68B2" size={40} />} label="calendário" />
-          <MenuButton icon={<Icon name="phone-incoming" color="#1F68B2" size={40} />} label="central de atendimento" />
-          <MenuButton icon={<Icon name="clock" color="#1F68B2" size={40} />} label="horários disponíveis" />
+      
+          <MenuButton 
+            icon={<Icon name="calendar-check" color="#1F68B2" size={40} />} 
+            label="meus agendamentos" 
+            onPress={() => router.push('/datas')} 
+          />
+          <MenuButton 
+            icon={<Icon name="calendar" color="#1F68B2" size={40} />} 
+            label="calendário" 
+            onPress={() => router.push('/explore')} 
+          />
+          <MenuButton 
+            icon={<Icon name="phone-incoming" color="#1F68B2" size={40} />} 
+            label="central de atendimento" 
+            onPress={() => router.push('/faleconosco')} 
+          />
+          <MenuButton 
+            icon={<Icon name="clock" color="#1F68B2" size={40} />} 
+            label="horários disponíveis" 
+            onPress={() => router.push('/horarios')} 
+          />
         </View>
       </View>
 
@@ -53,14 +71,15 @@ export default function ProfileScreen() {
   );
 }
 
+
 type MenuButtonProps = {
   icon: React.ReactNode;
   label: string;
+  onPress: () => void; 
 };
 
-
-const MenuButton = ({ icon, label }: MenuButtonProps) => (
-  <TouchableOpacity style={styles.card}>
+const MenuButton = ({ icon, label, onPress }: MenuButtonProps) => (
+  <TouchableOpacity style={styles.card} onPress={onPress}>
     {icon}
     <Text style={styles.cardText}>{label}</Text>
   </TouchableOpacity>
@@ -72,7 +91,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#E5E5E5',
   },
   header: {
-    backgroundColor: BLUE_COLOR,
+    backgroundColor: '#1F68B2',
     height: '45%',
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,
@@ -154,14 +173,14 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   cardText: {
-    color: BLUE_COLOR,
+    color: '#1F68B2',
     textAlign: 'center',
     fontWeight: 'bold',
     marginTop: 10,
     fontSize: 14,
   },
   footer: {
-    backgroundColor: BLUE_COLOR,
+    backgroundColor: '1F68B2',
     height: 60,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,

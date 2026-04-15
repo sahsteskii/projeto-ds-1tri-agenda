@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-  ScrollView,
-  SafeAreaView,
-  StatusBar,
-  Linking,
   Alert,
+  Linking,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
-export default function FaleConosco() {
+export default function Faleconosco() {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [mensagem, setMensagem] = useState('');
@@ -38,78 +38,66 @@ export default function FaleConosco() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#000" />
+      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Título */}
+        {/* Título em azul */}
         <Text style={styles.title}>Fale conosco</Text>
 
-        {/* Informações de Contato */}
-        <TouchableOpacity style={styles.contactCard} onPress={handlePhonePress}>
-          <Text style={styles.contactIcon}>📞</Text>
+        {/* Contato Telefone com ícone */}
+        <TouchableOpacity onPress={handlePhonePress} style={styles.contactItem}>
+          <Text style={styles.iconText}>📞</Text>
           <Text style={styles.contactText}>+55 (41) 98458-4105</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.contactCard} onPress={handleEmailPress}>
-          <Text style={styles.contactIcon}>✉️</Text>
+        {/* Contato Email com ícone */}
+        <TouchableOpacity onPress={handleEmailPress} style={styles.contactItem}>
+          <Text style={styles.iconText}>✉️</Text>
           <Text style={styles.contactText}>calendariopr@gmail.com</Text>
         </TouchableOpacity>
 
-        {/* Formulário */}
-        <View style={styles.form}>
-          <Text style={styles.formTitle}>Envie uma mensagem</Text>
-          
-          <Text style={styles.label}>Seu nome</Text>
-          <TextInput
-            style={styles.input}
-            placeholderTextColor="#999"
-            value={nome}
-            onChangeText={setNome}
-          />
-          
-          <Text style={styles.label}>Seu e-mail</Text>
-          <TextInput
-            style={styles.input}
-            placeholderTextColor="#999"
-            keyboardType="email-address"
-            value={email}
-            onChangeText={setEmail}
-          />
-          
-          <Text style={styles.label}>Sua mensagem</Text>
-          <TextInput
-            style={[styles.input, styles.textArea]}
-            placeholderTextColor="#999"
-            multiline
-            numberOfLines={4}
-            value={mensagem}
-            onChangeText={setMensagem}
-          />
-          
-          <TouchableOpacity style={styles.button} onPress={handleEnviar}>
-            <Text style={styles.buttonText}>Enviar</Text>
-          </TouchableOpacity>
-        </View>
+        {/* Título do formulário */}
+        <Text style={styles.formTitle}>Envie uma mensagem</Text>
+
+        {/* Campo Nome */}
+        <TextInput
+          style={styles.input}
+          placeholder="Seu nome"
+          placeholderTextColor="#999"
+          value={nome}
+          onChangeText={setNome}
+        />
+
+        {/* Campo E-mail */}
+        <TextInput
+          style={styles.input}
+          placeholder="Seu e-mail"
+          placeholderTextColor="#999"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          value={email}
+          onChangeText={setEmail}
+        />
+
+        {/* Campo Mensagem */}
+        <TextInput
+          style={[styles.input, styles.textArea]}
+          placeholder="Sua mensagem"
+          placeholderTextColor="#999"
+          multiline
+          numberOfLines={4}
+          value={mensagem}
+          onChangeText={setMensagem}
+        />
+
+        {/* Botão Enviar */}
+        <TouchableOpacity style={styles.button} onPress={handleEnviar}>
+          <Text style={styles.buttonText}>Enviar</Text>
+        </TouchableOpacity>
       </ScrollView>
 
-      {/* Bottom Navigation AZUL */}
-      <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navText}>Home</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navText}>Explore</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={[styles.navItem, styles.activeNavItem]}>
-          <Text style={[styles.navText, styles.activeNavText]}>aiuda</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navText}>datas</Text>
-        </TouchableOpacity>
-      </View>
+      {/* Rodapé apenas com a cor azul - sem texto */}
+      <View style={styles.footerBlue} />
     </SafeAreaView>
   );
 }
@@ -117,110 +105,72 @@ export default function FaleConosco() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#121212',
+    backgroundColor: '#fff',
   },
   scrollContent: {
     flexGrow: 1,
-    paddingBottom: 100,
+    paddingHorizontal: 24,
+    paddingTop: 40,
+    paddingBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    color: 'white',
-    marginTop: 20,
-    marginBottom: 24,
-    paddingHorizontal: 20,
+    marginBottom: 20,
+    color: '#005C97', // Azul
   },
-  contactCard: {
+  contactItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#1e1e1e',
-    marginHorizontal: 20,
-    marginVertical: 8,
-    padding: 14,
-    borderRadius: 8,
+    marginBottom: 16,
   },
-  contactIcon: {
-    fontSize: 20,
+  iconText: {
+    fontSize: 22,
     marginRight: 12,
   },
   contactText: {
-    fontSize: 16,
-    color: 'white',
-    flex: 1,
-  },
-  form: {
-    marginHorizontal: 20,
-    marginTop: 24,
-    backgroundColor: '#1e1e1e',
-    borderRadius: 8,
-    padding: 16,
+    fontSize: 18,
+    color: '#000',
+    textDecorationLine: 'underline',
   },
   formTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: 'white',
-    marginBottom: 16,
-  },
-  label: {
-    fontSize: 14,
-    color: '#aaa',
-    marginBottom: 6,
-    marginTop: 8,
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginTop: 30,
+    marginBottom: 20,
+    color: '#000',
   },
   input: {
-    backgroundColor: '#2a2a2a',
-    borderRadius: 6,
-    padding: 12,
-    color: 'white',
-    fontSize: 16,
     borderWidth: 1,
-    borderColor: '#333',
+    borderColor: '#ccc',
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    paddingVertical: 12,
+    fontSize: 16,
+    marginBottom: 16,
+    backgroundColor: '#fff',
+    color: '#000',
   },
   textArea: {
     height: 100,
     textAlignVertical: 'top',
   },
   button: {
-    backgroundColor: '#007AFF',
-    borderRadius: 6,
-    padding: 14,
+    backgroundColor: '#005C97',
+    borderRadius: 8,
+    paddingVertical: 14,
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 10,
+    marginBottom: 20,
   },
   buttonText: {
-    color: 'white',
-    fontSize: 16,
+    color: '#fff',
+    fontSize: 18,
     fontWeight: 'bold',
   },
-  
-  // Rodapé AZUL
-  bottomNav: {
-    flexDirection: 'row',
-    backgroundColor: '#0066CC', // Azul principal
+  footerBlue: {
+    backgroundColor: '#005C97', // Apenas a cor azul
+    height: 60, // Altura do rodapé
     width: '100%',
-    paddingVertical: 14,
-    paddingHorizontal: 20,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: 0,
-  },
-  navItem: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  activeNavItem: {
-    // Item ativo pode ter estilo adicional se quiser
-  },
-  navText: {
-    color: 'rgba(255,255,255,0.7)',
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  activeNavText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 15,
   },
 });
