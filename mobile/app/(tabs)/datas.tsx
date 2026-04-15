@@ -1,14 +1,14 @@
+import { useRouter } from 'expo-router';
 import React from 'react';
-import { 
-  StyleSheet, 
-  Text, 
-  View, 
-  TouchableOpacity, 
+import {
+  Dimensions,
   FlatList,
   StatusBar,
-  Dimensions
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import { useRouter } from 'expo-router';
 
 const { width } = Dimensions.get('window');
 
