@@ -19,9 +19,9 @@ export default function TabLayout() {
         tabBarInactiveTintColor: 'rgba(255, 255, 255, 0.6)',
         headerShown: false,
         tabBarButton: HapticTab,
-        // ESTAS LINHAS ABAIXO DEFINEM A COR AZUL
+       
         tabBarStyle: {
-          backgroundColor: '#1E67BD', // Azul do seu cabeçalho
+          backgroundColor: '#1E67BD',
           borderTopWidth: 0,
         },
       }}>
