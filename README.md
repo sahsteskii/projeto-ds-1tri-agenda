@@ -1,6 +1,4 @@
-# projeto-ds-1tri-agenda
-
-
+# SISTEMA DE AGENDAMENTOS
 ## integrantes 
 - Isabella
 - Júlia Almeida
