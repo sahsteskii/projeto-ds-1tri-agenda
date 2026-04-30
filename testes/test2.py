@@ -4,7 +4,7 @@ def agendar(data, hora, confirmacao):
     else:
         return "agendamento realizado"
 
-resultado = agendar("25/04/2026", "10:00", "verdadeiro")
+resultado = agendar("26/06/2026", "", "verdadeiro")
 esperado = "preencha todos os campos"
 
 if resultado == esperado:
