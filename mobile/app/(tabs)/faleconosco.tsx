@@ -8,8 +8,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
-  View,
+  TouchableOpacity
 } from 'react-native';
 
 export default function Faleconosco() {
@@ -96,8 +95,7 @@ export default function Faleconosco() {
         </TouchableOpacity>
       </ScrollView>
 
-      {/* Rodapé apenas com a cor azul - sem texto */}
-      <View style={styles.footerBlue} />
+      {/* A barra azul (footerBlue) foi removida daqui */}
     </SafeAreaView>
   );
 }
@@ -117,7 +115,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 20,
-    color: '#005C97', // Azul
+    color: '#005C97', 
   },
   contactItem: {
     flexDirection: 'row',
@@ -168,9 +166,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  footerBlue: {
-    backgroundColor: '#005C97', // Apenas a cor azul
-    height: 60, // Altura do rodapé
-    width: '100%',
-  },
+  
 });

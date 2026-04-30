@@ -9,7 +9,7 @@ import {
   Linking,
   StatusBar
 } from 'react-native';
-// Mudamos para @expo/vector-icons que já vem no Expo por padrão
+
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 export default function HomeScreen() {
@@ -22,13 +22,13 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor="#1E67B5" barStyle="light-content" />
       
-      {/* Header */}
+      {/* Cabeçalho */}
       <View style={styles.header}>
         <MaterialCommunityIcons name="account" size={50} color="#FFF" />
         <Text style={styles.headerTitle}>AGENDAMENTOS</Text>
       </View>
 
-      {/* Formulário */}
+      {/* Conteúdo Principal */}
       <View style={styles.content}>
         <Text style={styles.label}>Fazer login</Text>
         <TextInput 
@@ -56,25 +56,6 @@ export default function HomeScreen() {
           </View>
           <Text style={styles.googleButtonText}>Fazer login com o google</Text>
         </TouchableOpacity>
-      </View>
-
-      {/* Bottom Navigation (Simulada conforme a imagem) */}
-      <View style={styles.bottomNav}>
-        <View style={styles.navItem}>
-          <MaterialCommunityIcons name="account-circle-outline" size={35} color="#FFF" />
-          <Text style={styles.navText}>Pe...</Text>
-        </View>
-        <View style={styles.navItem}>
-          <MaterialCommunityIcons name="calendar-check" size={35} color="#FFF" />
-          <Text style={styles.navText}>C...</Text>
-        </View>
-        <View style={styles.navItem}>
-          <MaterialCommunityIcons name="alarm" size={35} color="#FFF" />
-          <Text style={styles.navText}>Alarm</Text>
-        </View>
-        <View style={styles.navItem}>
-          <MaterialCommunityIcons name="whatsapp" size={35} color="#FFF" />
-        </View>
       </View>
     </SafeAreaView>
   );
@@ -150,19 +131,5 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 16,
     marginLeft: 15,
-  },
-  bottomNav: {
-    backgroundColor: '#1E67B5',
-    height: 80,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-  navItem: {
-    alignItems: 'center',
-  },
-  navText: {
-    color: '#FFF',
-    fontSize: 10,
   }
 });
