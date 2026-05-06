@@ -2,10 +2,10 @@ def agendar(data, hora, confirmacao):
     if not data or not hora or not confirmacao:
         return "preencha todos os campos"
     else:
-        return "agendamento realizado"
+        return "erro"
 
-resultado = agendar("25/04/2026", "10:00", "verdadeiro")
-esperado = "preencha todos os campos"
+resultado = agendar("32/04/2026", "10:00", "verdadeiro")
+esperado = "data invalida"
 
 if resultado == esperado:
     print("teste passou")
